@@ -165,7 +165,7 @@ Api.handle_response = vim.schedule_wrap(function(response, exit_code, cb)
     if message ~= nil then
       local message_response
       local first_message = json.choices[1].message
-      if first_message.function_call then
+      if type(first_message.function_call) == "table" and first_message.function_call.arguments then
         message_response = vim.fn.json_decode(first_message.function_call.arguments)
       else
         message_response = first_message.content
